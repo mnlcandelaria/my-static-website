@@ -6,6 +6,11 @@ on:
 
   workflow_dispatch:
 
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +23,7 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn export
-      - uses: aws-actions/configure-aws-credentials@master
+      - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
